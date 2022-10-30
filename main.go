@@ -26,6 +26,7 @@ type ConfigStruct struct {
 	SaveFile string `json:"save"`
 	Seed     int64  `json:"seed"`
 	Minsize  int    `json:"minsize"`
+	FICall1  string `json:"fn_call1"`
 	session  string
 }
 
@@ -109,13 +110,14 @@ func login() bool {
 	defer re.Body.Close()
 
 	log("信息", "登录成功", true)
+	//config.session = "mez7ewvx4v"
 	return true
 }
 
 // 返回网络连接是否正常
 func getImage(seed int64) bool {
 	log("信息", "请求服务器AI绘制"+fmt.Sprint(seed), true)
-	re, err1 := client.Post(config.Host+"api/predict/", "application/json", bytes.NewBuffer([]byte(fmt.Sprintf("{\"fn_index\":14,\"data\":%s,\"session_hash\":%s\"\"}", fmt.Sprintf(config.DrawArgs, fmt.Sprint(seed)), config.session))))
+	re, err1 := client.Post(config.Host+"api/predict/", "application/json", bytes.NewBuffer([]byte(fmt.Sprintf("{\"fn_index\":%s,\"data\":%s,\"session_hash\":%s\"\"}", config.FICall1, fmt.Sprintf(config.DrawArgs, fmt.Sprint(seed)), config.session))))
 
 	if err1 != nil {
 		log("错误", "请求失败："+err1.Error(), true)
