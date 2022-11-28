@@ -132,7 +132,7 @@ func getImage(seed int64) bool {
 	}
 	restr := string(bt)
 
-	namest := strings.Index(restr, "\"name\":\"/")
+	namest := strings.Index(restr, "\"name\":\"")
 	if namest == -1 {
 		log("错误", "请求失败：服务器未返回文件名(1)", true)
 		return false
